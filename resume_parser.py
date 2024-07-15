@@ -42,7 +42,7 @@ def process_resumes(resumes_text):
     for filename, text in resumes_text.items():
         prompt_template = f'''
         You are an AI bot designed to act as a professional for parsing resumes.
-        You are given with resume and your job is to extract the following information from the resume in csv with header just that dont give additional text in the begining and end just this info:
+        You are given with resume and your job is to extract the following information from the resume {text} in csv with header just that dont give additional text in the begining and end just this info:
         1. full name
         2. email id
         3. github portfolio
@@ -51,7 +51,7 @@ def process_resumes(resumes_text):
         6. technical skills
         7. soft skills
         Give the extracted information in csv format only
-        and this is resume{text} and dont add additional text in begining and end just extract csv and give complete information i dont want such line also
+        and this is resume {text} and dont add additional text in begining and end just extract csv and give complete information i dont want such line also
         Here is the extracted information in CSV format:
         '''
         
