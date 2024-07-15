@@ -42,7 +42,7 @@ def process_resumes(resumes_text):
     for filename, text in resumes_text.items():
         prompt_template = f'''
         You are an AI bot designed to act as a professional for parsing resumes.
-        You are given with resume and your job is to extract the following information from the resume just that dont give additional text in the begining and end just this info:
+        You are given with resume and your job is to extract the following information from the resume in csv just that dont give additional text in the begining and end just this info:
         1. full name
         2. email id
         3. github portfolio
