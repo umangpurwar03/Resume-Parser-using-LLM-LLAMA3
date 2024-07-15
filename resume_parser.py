@@ -52,7 +52,7 @@ def process_resumes(resumes_text):
         7. soft skills
         Give the extracted information in csv format only
         and this is resume {text} and dont add additional text in begining and end just extract csv and give complete information i dont want such line also
-        Here is the extracted information in CSV format from resume:
+        Here is the extracted information in CSV format from resume details avobe provided:
         '''
         
         groq_api_key = st.secrets["groq"]["api_key"]
