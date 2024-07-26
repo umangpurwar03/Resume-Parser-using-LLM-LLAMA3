@@ -118,8 +118,8 @@ def process_resumes(resumes_text):
         Resume:
         {text}
         '''
-
-        client = Groq(api_key="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")
+        api_key=st.secrets["groq"]["api_key"]
+        client = Groq(api_key=api_key)
 
         chat_completion = client.chat.completions.create(
             messages=[
