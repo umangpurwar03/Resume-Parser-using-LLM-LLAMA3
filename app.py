@@ -153,10 +153,12 @@ def process_resumes(resumes_text):
 
         # Wait for 10 seconds before processing the next resume
         time.sleep(10)
-
-    result_df = pd.concat(all_rows, ignore_index=True)
-    result_df.to_csv(csv_file, index=False)
-    return csv_file, result_df
+    try:
+        result_df = pd.concat(all_rows, ignore_index=True)
+        result_df.to_csv(csv_file, index=False)
+        return csv_file, result_df
+    except:
+        st.error(f"resume parsing got error")
 
 def main():
     st.title("Resume Parser")
