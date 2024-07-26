@@ -206,8 +206,10 @@ def main():
                 else:
                     text = extract_text_from_resume(file)
                     resumes_text[file.name] = text
-
-            csv_file, all_rows = process_resumes(resumes_text)
+            try:
+                csv_file, all_rows = process_resumes(resumes_text)
+            except:
+                st.error(f"resume parsing got error")
 
             st.write("### Extracted Information")
             st.dataframe(all_rows)
