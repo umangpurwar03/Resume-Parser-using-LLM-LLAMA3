@@ -110,46 +110,29 @@ def extract_text_from_resume(file_path):
     else:
         raise ValueError(f"Unsupported file format: {file_path}")
 
-def extract_text_from_resumes_in_folder(folder_path):
-    """
-    Extracts text from all resume files (.docx or .pdf) in a folder.
-    """
-    resumes_text = {}
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        if filename.endswith('.docx') or filename.endswith('.pdf'):
-            try:
-                text = extract_text_from_resume(file_path)
-                resumes_text[filename] = text
-            except Exception as e:
-                print(f"Failed to extract text from {filename}: {e}")
-    return resumes_text
+def ensure_fields(row, fieldnames):
+    for field in list(row.keys()):
+        if field not in fieldnames:
+            del row[field]
 
-# Example usage
-folder_path = 'data'
-resumes_text = extract_text_from_resumes_in_folder(folder_path)
-all_rows = []
-
-for filename, text in resumes_text.items():
-    print(f"--- {filename} ---")
-    # Define a template for the prompt
-    prompt_template = f'''
-        You are an AI bot designed to act as a professional for parsing resumes.
-        You are given a resume, and your job is to extract the following information from it without adding any additional text:
-        1. Full name
-        2. Email ID
-        3. GitHub portfolio
-        4. LinkedIn ID
-        5. Employment details
-        6. Technical skills
-        7. Soft skills
-        Give the extracted information in the following format: {format_instructions}
-
-        Resume:
-        {text}
-        '''
-    
-    client = Groq(api_key="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")
+def process_resumes(resumes_text):
+    all_rows = []
+    for filename, text in resumes_text.items():
+        prompt_template = f'''
+    You are an AI bot designed to act as a professional for parsing resumes. You are given with resume {text} and your job is to extract the following information from the resume:
+    1. full name
+    2. email id
+    3. github portfolio
+    4. linkedin id
+    5. employment details
+    6. technical skills
+    7. soft skills
+    Give the extracted information in csv format only not other text i want in start and end
+    '''
+        
+        groq_api_key = st.secrets["groq"]["api_key"]
+        
+        client = Groq(api_key=groq_api_key)
 
     chat_completion = client.chat.completions.create(
         messages=[
