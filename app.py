@@ -73,13 +73,13 @@ def extract_text_from_docx(docx_file):
     text = [para.text for para in doc.paragraphs]
     return '\n'.join(text)
 
-def extract_text_from_doc(doc_path):
-    word = win32com.client.Dispatch("Word.Application")
-    doc = word.Documents.Open(doc_path)
-    text = doc.Content.Text
-    doc.Close(False)
-    word.Quit()
-    return text
+# def extract_text_from_doc(doc_path):
+#     word = win32com.client.Dispatch("Word.Application")
+#     doc = word.Documents.Open(doc_path)
+#     text = doc.Content.Text
+#     doc.Close(False)
+#     word.Quit()
+#     return text
 
 def extract_text_from_pdf(pdf_file):
     from PyPDF2 import PdfReader
@@ -92,8 +92,8 @@ def extract_text_from_pdf(pdf_file):
 def extract_text_from_resume(file):
     if file.name.endswith('.docx'):
         return extract_text_from_docx(file)
-    elif file.name.endswith('.doc'):
-        return extract_text_from_doc(file)
+    # elif file.name.endswith('.doc'):
+    #     return extract_text_from_doc(file)
     elif file.name.endswith('.pdf'):
         return extract_text_from_pdf(file)
     else:
@@ -184,8 +184,8 @@ def main():
     """, unsafe_allow_html=True)
 
     uploaded_files = st.sidebar.file_uploader(
-        "Upload individual resumes (.docx or .pdf or .doc), multiple resumes, or a zip folder containing resumes.",
-        type=["pdf", "docx","doc", "zip"], 
+        "Upload individual resumes (.docx or .pdf ), multiple resumes, or a zip folder containing resumes.",
+        type=["pdf", "docx", "zip"], 
         accept_multiple_files=True
     )
 
@@ -197,7 +197,7 @@ def main():
                 if file.name.endswith('.zip'):
                     with zipfile.ZipFile(file, 'r') as zip_ref:
                         for zip_info in zip_ref.infolist():
-                            if zip_info.filename.endswith(('.docx', '.pdf','.doc')):
+                            if zip_info.filename.endswith(('.docx', '.pdf')):
                                 with zip_ref.open(zip_info) as extracted_file:
                                     text = extract_text_from_resume(extracted_file)
                                     resumes_text[zip_info.filename] = text
