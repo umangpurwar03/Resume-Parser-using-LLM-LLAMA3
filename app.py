@@ -5,7 +5,7 @@ import io
 import json
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 from groq import Groq
-import win32com.client
+# import win32com.client
 import time
 
 # Define individual schemas for each resume detail
